@@ -1,0 +1,33 @@
+name: Unit Test Job
+
+on: 
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    unit-test-job:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Set up Python
+              uses: actions/setup-python@v4
+              with:
+                  python-version: 3.12
+
+            - name: Load dependencies
+              run: |
+                  curl -sSL https://install.python-poetry.org | python3 -
+                  echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+            - name: Install dependencies
+              run: poetry install
+    
+            - name: Running unit tests
+              run: ./run-unit-tests.sh
