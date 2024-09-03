@@ -49,10 +49,12 @@ services:
 
   housing-api:
     container_name: housing-api
-    build: 
-      context: .
-      dockerfile: Dockerfile
-    volumes: [".:/application", "/application/.venv"]
+    image: ghcr.io/nalin28/sample-api:latest
+    entrypoint: fastapi dev --host 0.0.0.0 --port 3000 src/sample_api/main.py
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    # volumes: [".:/application", "/application/.venv"]
     environment:
       <<: [*postgres-vars]
     ports: ["3003:3000"]
